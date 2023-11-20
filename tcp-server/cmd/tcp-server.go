@@ -1,4 +1,4 @@
-package tcp-server
+package main
 
 import (
 	"bufio"
