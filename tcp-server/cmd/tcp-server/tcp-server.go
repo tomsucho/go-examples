@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"net/textproto"
+	"time"
 )
 
 func handleConnection(conn net.Conn, id int) {
@@ -22,6 +23,11 @@ func handleConnection(conn net.Conn, id int) {
 			return
 		} else {
 			log.Print("id: ", id, " Received: ", text)
+			// write back to client
+			date := time.Now().Format(time.RFC3339Nano)
+			if _, err := conn.Write([]byte(fmt.Sprintf("%-40s ==> SERVER ACKed!\n", date))); err != nil {
+				log.Printf("Connection id: %d write back to %s failed!\n", id, conn.RemoteAddr())
+			}
 		}
 	}
 }
@@ -41,7 +47,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		go handleConnection(conn, i)
+		file, err := conn.(*net.TCPConn).File()
+		defer file.Close()
+		go handleConnection(conn, int(file.Fd()))
 		i++
 	}
 }
