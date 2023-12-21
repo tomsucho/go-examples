@@ -47,7 +47,9 @@ func main() {
 			log.Fatal(err)
 		}
 		file, err := conn.(*net.TCPConn).File()
-		defer file.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
 		go handleConnection(conn, int(file.Fd()))
 	}
 }
