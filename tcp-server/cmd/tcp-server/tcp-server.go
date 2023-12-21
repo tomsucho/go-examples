@@ -39,7 +39,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	i := 1
 	log.Printf("Listening on %d", *portNum)
 	defer l.Close()
 	for {
@@ -50,6 +49,5 @@ func main() {
 		file, err := conn.(*net.TCPConn).File()
 		defer file.Close()
 		go handleConnection(conn, int(file.Fd()))
-		i++
 	}
 }
