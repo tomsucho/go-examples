@@ -7,7 +7,7 @@
   - starts a TCP server on port 8080 by default
   - prints data the client has sent it
   - responds back to client with timestamped text message confirming data reception
-  - the client currently sends a single hardcoded msg and quits, or instead of `-pipe` flag added it alternatively can read data from Linux pipe and send it, eg.:
+  - the client currently sends a single hardcoded msg and quits after getting server ACK message back. When the `-pipe` flag added it alternatively can read data from Linux pipe insteaf of using the hardcoed text message e.g.:
     ```
     11:52 $ echo "Testing!" | tcp-client -pipe
     2024/01/03 11:52:22 Waiting for reply..
