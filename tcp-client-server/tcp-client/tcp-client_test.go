@@ -2,7 +2,7 @@
 package main
 
 import (
-	"io"
+	"log"
 	"net"
 	"strings"
 	"testing"
@@ -18,12 +18,16 @@ func TestSendUserInput(t *testing.T) {
 	// call SendUserInput function with the connection
 	go SendUserInput(conn1, strings.NewReader(testString))
 
-	// read the data written to the connection until EOF
-	data, _ := io.ReadAll(conn2)
+	// read the 1024 bytes written to the connection
+	data := make([]byte, 1024)
+	n, err := conn2.Read(data)
+	if err != nil {
+		log.Fatal("Error reading connection: ", err)
+	}
+	r_msg := string(data[:n])
 
 	// check if the data written matches the expected output
-	expectedOutput := "Hello, World!\n"
-	if string(data) != expectedOutput {
-		t.Errorf("Expected output %s, got %s", expectedOutput, string(data))
+	if r_msg != testString {
+		t.Errorf("Expected output %s, got %s", testString, r_msg)
 	}
 }

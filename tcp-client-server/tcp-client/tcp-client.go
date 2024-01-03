@@ -21,7 +21,6 @@ func SendUserInput(conn net.Conn, r io.Reader) {
 	if err := input.Err(); err != nil {
 		log.Fatal(err)
 	}
-	defer conn.Close()
 }
 
 func main() {
