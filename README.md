@@ -7,7 +7,12 @@
   - starts a TCP server on port 8080 by default
   - prints data the client has sent it
   - responds back to client with timestamped text message confirming data reception
-  - the client currently sends a single hardcoded msg and quits, so quite rudimentary to not say useless, but this is just learning. For more advanced client functionality one could just use telnet or netcat instead of course :)
+  - the client currently sends a single hardcoded msg and quits, or instead of `-pipe` flag added it alternatively can read data from Linux pipe and send it, eg.:
+    ```
+    11:52 $ echo "Testing!" | tcp-client -pipe
+    2024/01/03 11:52:22 Waiting for reply..
+    Server response: 2024-01-03T11:52:22.535248794+01:00      ==> SERVER ACKed!
+    ```
 - Installation:
   - go install github.com/tomsucho/go-examples/tcp-client-server/tcp-client@latest
   - go install github.com/tomsucho/go-examples/tcp-client-server/tcp-server@latest
